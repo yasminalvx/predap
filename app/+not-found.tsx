@@ -1,10 +1,14 @@
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, useRouter } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function NotFoundScreen() {
+  const router = useRouter(); // Hook para acessar o router
+
+  // Use asPath ou route para obter a rota atual
+  console.log('Tentando acessar a rota:', router); // Use asPath
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
