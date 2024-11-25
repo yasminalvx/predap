@@ -1,21 +1,16 @@
-import { Link, Stack, useRouter } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
-
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function NotFoundScreen() {
-  const router = useRouter(); // Hook para acessar o router
-
-  // Use asPath ou route para obter a rota atual
-  console.log('Tentando acessar a rota:', router); // Use asPath
   return (
     <>
       <Stack.Screen options={{ title: 'Oops!' }} />
       <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
+        <ThemedText type="title">Esta tela não existe</ThemedText>
         <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
+          <ThemedText type="link">Volte para o Início</ThemedText>
         </Link>
       </ThemedView>
     </>

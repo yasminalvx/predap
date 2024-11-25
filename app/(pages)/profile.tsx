@@ -1,22 +1,22 @@
+import { useAlert } from "@/components/Alert";
 import { useTheme } from "@/components/ThemeContext";
 import { Colors } from "@/constants/Colors";
 import { makeSystemStyle } from "@/constants/genericStyles";
 import { SupabaseService } from "@/services/supabase.service";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { router, useNavigation } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  Alert,
   Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function ProfileScreen() {
   const { isDarkTheme } = useTheme();
@@ -31,6 +31,7 @@ export default function ProfileScreen() {
   const [sexo, setSexo] = useState("");
   const [dataNascimento, setDataNascimento] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const showAlert = useAlert();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -41,7 +42,6 @@ export default function ProfileScreen() {
   }, [navigation, refreshing]);
 
   const checkUser = async () => {
-    console.log("Searching for user");
     const response = await supabaseService.checkUserLoggedIn();
     if (!response.data.user) {
       router.navigate("Login" as any);
@@ -49,9 +49,8 @@ export default function ProfileScreen() {
       const data = response.data.user.user_metadata;
       setEmail(data.email);
       setNome(data.nome);
-      setSexo(data.sexo);
-      setDataNascimento(new Date(data.dataNascimento));
-      console.log(response.data);
+      data.sexo &&setSexo(data.sexo);
+      data.dataNascimento && setDataNascimento(new Date(data.dataNascimento));
     }
   };
 
@@ -65,7 +64,7 @@ export default function ProfileScreen() {
 
   const updateUser = async () => {
     if (!email || !nome || !sexo || !dataNascimento) {
-      Alert.alert("Preencha todos os campos");
+      showAlert("Preencha todos os campos");
       return;
     }
     const response = await supabaseService.updateUser(email, {
@@ -74,11 +73,12 @@ export default function ProfileScreen() {
       dataNascimento,
     });
     if (response.data) {
-      Alert.alert("Usuário atualizado com sucesso");
-      router.back();
+      showAlert("Usuário atualizado com sucesso", '', () => {
+        router.navigate('/' as any);
+      });
     } else
     if (response.error) {
-      console.log(response.error);
+      console.error(response.error);
     }
   };
 
@@ -152,7 +152,6 @@ export default function ProfileScreen() {
               <Picker
                 selectedValue={sexo}
                 onValueChange={(itemValue: any) => setSexo(itemValue)}
-                selectionColor="#9A4DFF"
                 style={systemStyle.input}
               >
                 <Picker.Item label="Selecione" value="" />
@@ -165,7 +164,7 @@ export default function ProfileScreen() {
         <View style={styles.footer}>
           <Pressable
             style={systemStyle.buttonOutlined}
-            onPress={() => router.back()}
+            onPress={() => router.navigate('/' as any)}
           >
             <Text style={systemStyle.buttonTextOutlined}>Voltar</Text>
           </Pressable>

@@ -1,3 +1,4 @@
+import { useAlert } from "@/components/Alert";
 import { useTheme } from "@/components/ThemeContext";
 import { Colors } from "@/constants/Colors";
 import { SupabaseService } from "@/services/supabase.service";
@@ -7,9 +8,8 @@ import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function TimerScreen() {
-  const { exercisesInput, date } = useLocalSearchParams<{
+  const { exercisesInput } = useLocalSearchParams<{
     exercisesInput: string;
-    date: string;
   }>();
   const exercises = exercisesInput ? JSON.parse(exercisesInput) : [];
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
@@ -19,13 +19,14 @@ export default function TimerScreen() {
   const [setsRemaining, setSetsRemaining] = useState(exercises[0].sets);
   const [isResting, setIsResting] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  let intervalId: any;
   const { isDarkTheme } = useTheme();
   const colorScheme = isDarkTheme ? "dark" : "light";
   const styles = makeStyles(Colors[colorScheme || "light"]);
   const currentExercise = exercises[currentExerciseIndex];
   const [pacientId, setPacientId] = useState("");
   const supabaseService = new SupabaseService();
+  let intervalId: any;
+  const showAlert = useAlert();
 
   const toggleTimer = () => {
     setIsRunning((prev) => !prev);
@@ -45,10 +46,9 @@ export default function TimerScreen() {
   };
 
   useEffect(() => {
-    console.log('date', exercises);
     resetTimer();
     checkUser();
-  }, [date]);
+  }, [navigator]);
 
   const checkUser = async () => {
     const response = await supabaseService.checkUserLoggedIn();
@@ -58,8 +58,6 @@ export default function TimerScreen() {
       setPacientId(response.data.user.id);
     }
   };
-
-  
 
   useEffect(() => {
     if (isRunning) {
@@ -73,12 +71,14 @@ export default function TimerScreen() {
   }, [isRunning]);
 
   const registrarTreino = async (exercicioId: string) => {
-    console.log('registrando treino', exercicioId, date, pacientId);
-    const {data, error } = await supabaseService.registroExercicio(pacientId, date, exercicioId);
+    const { error } = await supabaseService.registroExercicio(
+      pacientId,
+      exercicioId
+    );
     if (error) {
-      console.log(error);
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     const handleTimer = async () => {
@@ -87,10 +87,10 @@ export default function TimerScreen() {
         : isContracting
         ? currentExercise.time_contracting
         : currentExercise.time_releasing;
-  
+
       if (timer >= totalDuration) {
         setTimer(0);
-  
+
         if (isResting) {
           if (currentExerciseIndex < exercises.length - 1) {
             setCurrentExerciseIndex((prev) => prev + 1);
@@ -111,16 +111,18 @@ export default function TimerScreen() {
           } else {
             if (currentExerciseIndex === exercises.length - 1) {
               setIsCompleted(true);
+              setSetsRemaining(0);
               await registrarTreino(currentExercise.exercicioId);
               setIsRunning(false);
             } else {
+              setSetsRemaining(0);
               setIsResting(true);
             }
           }
         }
       }
     };
-  
+
     handleTimer();
   }, [
     timer,
@@ -129,7 +131,7 @@ export default function TimerScreen() {
     currentExercise,
     currentExerciseIndex,
     setsRemaining,
-  ]);  
+  ]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -137,6 +139,16 @@ export default function TimerScreen() {
         <Text style={styles.title}>Exercícios</Text>
         <Text style={styles.exerciseName}>{currentExercise.exercise_name}</Text>
         <Text style={styles.sets}>Séries restantes: {setsRemaining}</Text>
+        {currentExercise.description && (
+          <Pressable
+            style={styles.buttonDetails}
+            onPress={() =>
+              showAlert("Sobre o Exercício", currentExercise.description)
+            }
+          >
+            <Text style={styles.buttonDetailsText}>Ver descrição </Text>
+          </Pressable>
+        )}
       </View>
 
       <View
@@ -184,74 +196,88 @@ export default function TimerScreen() {
   );
 }
 
-const makeStyles = (colors: any) => StyleSheet.create({
-  container: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: "100%",
-    padding: 40,
-    paddingBottom: 120,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: colors?.text,
-  },
-  exerciseName: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-    color: colors?.text,
-  },
-  sets: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: "center",
-    color: colors?.text,
-  },
-  exerciseBox: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  contractingBox: {
-    backgroundColor: "#FBBDFB",
-  },
-  releasingBox: {
-    backgroundColor: "#91F1FF",
-  },
-  restingBox: {
-    backgroundColor: "#D3A2FF",
-  },
-  completedBox: {
-    backgroundColor: "#9AECA0",
-  },
-  timer: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    paddingBottom: 10,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    gap: 20,
-  },
-  button: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#9A4DFF",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  redirectButton: {
-    backgroundColor: "#9AECA0",
-  },
-});
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    container: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      height: "100%",
+      padding: 40,
+      paddingBottom: 100,
+    },
+    title: {
+      fontSize: 22,
+      fontWeight: "bold",
+      marginBottom: 20,
+      textAlign: "center",
+      color: colors?.text,
+    },
+    exerciseName: {
+      fontSize: 20,
+      fontWeight: "bold",
+      marginBottom: 10,
+      textAlign: "center",
+      color: colors?.text,
+    },
+    sets: {
+      fontSize: 16,
+      marginBottom: 20,
+      textAlign: "center",
+      color: colors?.text,
+    },
+    exerciseBox: {
+      width: 200,
+      height: 200,
+      borderRadius: 100,
+      padding: 20,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    contractingBox: {
+      backgroundColor: "#FBBDFB",
+    },
+    releasingBox: {
+      backgroundColor: "#91F1FF",
+    },
+    restingBox: {
+      backgroundColor: "#D3A2FF",
+    },
+    completedBox: {
+      backgroundColor: "#9AECA0",
+    },
+    timer: {
+      fontSize: 18,
+      fontWeight: "bold",
+      textAlign: "center",
+      paddingBottom: 10,
+    },
+    buttonsContainer: {
+      flexDirection: "row",
+      gap: 20,
+    },
+    button: {
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+      backgroundColor: "#9A4DFF",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    redirectButton: {
+      backgroundColor: "#9AECA0",
+    },
+    buttonDetails: {
+      width: 200,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 30,
+      backgroundColor: "#9A4DFF",
+    },
+    buttonDetailsText: {
+      color: "#fff",
+      fontWeight: "bold",
+      fontSize: 18,
+      paddingVertical: 5,
+    },
+  });

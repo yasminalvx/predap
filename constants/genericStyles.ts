@@ -27,7 +27,6 @@ export const makeSystemStyle = (colors: any) => StyleSheet.create({
     fontSize: 24,
     marginVertical: 20,
     fontFamily: "Roboto",
-    fontStyle: "italic",
   },
   logo: {
     width: 100,

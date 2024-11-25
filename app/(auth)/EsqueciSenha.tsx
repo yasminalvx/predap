@@ -1,24 +1,28 @@
+import { useAlert } from "@/components/Alert";
 import { useTheme } from "@/components/ThemeContext";
 import { Colors } from "@/constants/Colors";
 import { makeSystemStyle } from "@/constants/genericStyles";
 import { SupabaseService } from "@/services/supabase.service";
+import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Image, Pressable, Text, TextInput, View } from "react-native";
+import { Image, Pressable, Text, TextInput, View } from "react-native";
 
-export default function EsqueciSenha({ navigation }: any) {
+export default function EsqueciSenha() {
   const [email, setEmail] = useState("");
   const supabaseService = new SupabaseService();
   const { isDarkTheme } = useTheme();
   const colorScheme = isDarkTheme ? "dark" : "light";
   const systemStyle = makeSystemStyle(Colors[colorScheme || "light"]);
+  const showAlert = useAlert();
 
   const handleForgotPassword = async () => {
-    const { error } = await supabaseService.resetPasswordForEmail(email);
+    const { error } = await supabaseService.resetPassword(email);
     if (error) {
-      Alert.alert("Erro", error.message);
+      showAlert("Erro", error.message);
     } else {
-      Alert.alert("Sucesso", "Verifique seu email para redefinir a senha");
-      navigation.navigate("Login");
+      showAlert("Sucesso", "Verifique seu email para redefinir a senha", () => {
+        router.navigate("Login" as any);
+      });
     }
   }
 
@@ -29,7 +33,7 @@ export default function EsqueciSenha({ navigation }: any) {
           <Text style={systemStyle.logoTitle}>PREDAP</Text>
           <Image
             style={systemStyle.logo}
-            source={require("@/assets/images/splash.png")}
+            source={require("@/assets/images/logo.png")}
           ></Image>
         </View>
         <View style={systemStyle.form}>

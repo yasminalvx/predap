@@ -28,7 +28,6 @@ export default function ConfigScreen() {
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getUser();
-      console.log("Config screen");
     });
     return unsubscribe;
   }, [navigation]);
@@ -38,7 +37,6 @@ export default function ConfigScreen() {
     if (!response.data.user) {
       router.navigate("Login" as any);
     } else {
-      console.log(response.data.user.user_metadata.nome);
       setName(response.data.user.user_metadata.nome);
     }
   }

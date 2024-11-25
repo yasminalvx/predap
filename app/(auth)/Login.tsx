@@ -1,9 +1,10 @@
+import { useAlert } from "@/components/Alert";
 import { Colors } from "@/constants/Colors";
 import { makeSystemStyle } from "@/constants/genericStyles";
 import { SupabaseService } from "@/services/supabase.service";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Image, Pressable, Text, TextInput, useColorScheme, View } from "react-native";
+import { Image, Pressable, Text, TextInput, useColorScheme, View } from "react-native";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,10 +12,12 @@ export default function Login() {
   const supabaseService = new SupabaseService();
   const colorScheme = useColorScheme();
   const systemStyle = makeSystemStyle(Colors[colorScheme || "light"]);
+  const showAlert = useAlert();
+
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Email e senha são obrigatórios");
+      showAlert("Email e senha são obrigatórios");
       return;
     }
     const entity = {
@@ -23,11 +26,11 @@ export default function Login() {
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(entity.email)) {
-      Alert.alert("Email inválido");
+      showAlert("Email inválido");
       return;
     }
     const { error } = await supabaseService.login(entity.email, entity.password);
-    if (error) Alert.alert(error.message);
+    if (error) showAlert(error.message);
     else router.navigate('/' as any);
   };
 
@@ -38,7 +41,7 @@ export default function Login() {
           <Text style={systemStyle.logoTitle}>PREDAP</Text>
           <Image
             style={systemStyle.logo}
-            source={require("@/assets/images/splash.png")}
+            source={require("@/assets/images/logo.png")}
           ></Image>
         </View>
         <View style={systemStyle.form}>
@@ -53,7 +56,7 @@ export default function Login() {
           />
           <TextInput
             style={systemStyle.input}
-            placeholder="Password"
+            placeholder="Senha"
             secureTextEntry
             onChangeText={setPassword}
             value={password}
