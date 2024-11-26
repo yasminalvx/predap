@@ -16,8 +16,9 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function DatailsPacienteScreen() {
-  const { pacienteId } = useLocalSearchParams<{
+  const { pacienteId, date } = useLocalSearchParams<{
     pacienteId: string;
+    date: string;
   }>();
   const [nome, setNome] = useState("");
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,6 @@ export default function DatailsPacienteScreen() {
   const systemStyle = makeSystemStyle(Colors[colorScheme || "light"]);
   const styles = makeStyles(Colors[colorScheme || "light"], systemStyle);
   const navigation = useNavigation();
-  const date = new Date();
 
   useEffect(() => {
     checkUser();
@@ -67,7 +67,7 @@ export default function DatailsPacienteScreen() {
   }, [navigation, pacienteId]);
 
   const getExercicios = async () => {
-    const response = await supabaseService.getExercicies(pacienteId, date);
+    const response = await supabaseService.getExercicies(pacienteId, new Date(date));
     const exercicios = response.data?.map((x: any) => {
       return {
         id: x.id,
@@ -77,6 +77,13 @@ export default function DatailsPacienteScreen() {
     });
     setExercicios(exercicios);
   };
+
+  const formattedDate = (date: string) => {
+    if (date.includes("+00:00")) {
+      date = date.replace("+00:00", "");
+    }
+    return formattedFullDate(date);
+  }
 
   if (loading) {
     return (
@@ -97,7 +104,7 @@ export default function DatailsPacienteScreen() {
             <Text style={styles.title}>Exercício: {exercicio.nome}</Text>
             {exercicio.inicio ? (
               <Text style={styles.title}>
-                Concluído às: {formattedFullDate(exercicio.inicio)}
+                Concluído às: {formattedDate(exercicio.inicio)}
               </Text>
             ) : (
               <Text style={styles.title}>Não concluído </Text>

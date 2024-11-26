@@ -101,6 +101,7 @@ export default function HomeFisioScreen() {
       pathname: "details-paciente" as any,
       params: {
         pacienteId: id,
+        date: currentDate.toUTCString()
       },
     });
   };

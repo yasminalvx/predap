@@ -1,8 +1,7 @@
-import { router, useNavigation } from "expo-router";
-import HomeScreen from "../(pages)/home";
-import { useEffect, useState } from "react";
 import { SupabaseService } from "@/services/supabase.service";
-import { Text } from "react-native";
+import { router, useNavigation } from "expo-router";
+import { useEffect, useState } from "react";
+import HomeScreen from "../(pages)/home";
 import HomeFisioScreen from "../(pages)/home-fisio";
 
 export default function IndexScreen() {

@@ -63,7 +63,7 @@ export default function TimerScreen() {
     if (isRunning) {
       intervalId = setInterval(() => {
         setTimer((prev) => prev + 1);
-      }, 100);
+      }, 1000);
     } else if (!isRunning && intervalId) {
       clearInterval(intervalId);
     }
