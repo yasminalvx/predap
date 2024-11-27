@@ -30,7 +30,9 @@ export default function Login() {
       return;
     }
     const { error } = await supabaseService.login(entity.email, entity.password);
-    if (error) showAlert(error.message);
+    if (error?.message.includes('Invalid login credentials'))
+      showAlert('Email ou senha inválidos');
+    else if (error) showAlert(error.message);
     else router.navigate('/' as any);
   };
 

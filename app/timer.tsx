@@ -1,8 +1,8 @@
 import { useAlert } from "@/components/Alert";
+import Icons from "@/components/Icons";
 import { useTheme } from "@/components/ThemeContext";
 import { Colors } from "@/constants/Colors";
 import { SupabaseService } from "@/services/supabase.service";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -177,7 +177,7 @@ export default function TimerScreen() {
       <View style={styles.buttonsContainer}>
         {!isCompleted ? (
           <Pressable style={[styles.button]} onPress={toggleTimer}>
-            <FontAwesome
+            <Icons
               name={isRunning ? "pause" : "play"}
               size={24}
               color="white"
@@ -188,7 +188,7 @@ export default function TimerScreen() {
             style={[styles.button, styles.redirectButton]}
             onPress={handleRedirect}
           >
-            <FontAwesome name="home" size={24} color="black" />
+            <Icons name="home" size={24} color="black" />
           </Pressable>
         )}
       </View>

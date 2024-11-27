@@ -36,9 +36,8 @@ export default function RootLayout() {
 // Layout que consome o tema do contexto
 function ThemeConsumerLayout() {
   const { theme } = useTheme();
-
   return (
-    <NavigationThemeProvider value={theme}>
+    <NavigationThemeProvider value={theme} >
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)/Login" options={{ headerShown: false }} />

@@ -1,10 +1,10 @@
 import DateNavigator from "@/components/DateNavigator";
+import Icons from "@/components/Icons";
 import { useTheme } from "@/components/ThemeContext";
 import { Colors } from "@/constants/Colors";
 import { makeSystemStyle } from "@/constants/genericStyles";
 import { SupabaseService } from "@/services/supabase.service";
 import { formattedDate } from "@/services/utils";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
@@ -157,7 +157,7 @@ export default function HomeFisioScreen() {
                     onPress={() => handleVisualizar(paciente.id)}
                   >
                     <View style={styles.boxExercise} key={paciente.id}>
-                        <FontAwesome
+                        <Icons
                             name={paciente.feito ? "check-circle" : "clock-o"}
                             size={40}
                             color="white"

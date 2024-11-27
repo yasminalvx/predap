@@ -18,6 +18,7 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { formattedDate } from "@/services/utils";
+import Icons from "@/components/Icons";
 
 export default function HomeScreen() {
   const [pacientId, setPacientId] = useState("");
@@ -143,7 +144,7 @@ export default function HomeScreen() {
                 )}
                 {exercicies?.map((exercicio: any, index: number) => (
                   <View style={styles.boxExercise} key={exercicio.id}>
-                    <FontAwesome
+                    <Icons
                       name={exercicio.feito ? "check-circle" : "play-circle"}
                       size={40}
                       color="white"

@@ -29,6 +29,7 @@
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/logo.png",
+      "name": "predap",
       "fonts": [
         "./node_modules/@expo/vector-icons/fonts/Ionicons.ttf",
         "./node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"
