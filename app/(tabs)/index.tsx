@@ -9,9 +9,15 @@ export default function IndexScreen() {
   const [profile, setProfile] = useState(null);
   const supabaseService = new SupabaseService();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log("Iniciou");
+    checkUser();
+  }, []);
   
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
+      console.log("Navegou");
       checkUser();
     });
     return unsubscribe;
