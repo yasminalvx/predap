@@ -7,7 +7,7 @@ import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, Text, TextInput, View } from "react-native";
 
-const ResetarSenha = () => {
+export default function ResetarSenha() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -85,5 +85,3 @@ const ResetarSenha = () => {
     </View>
   );
 };
-
-export default ResetarSenha;
