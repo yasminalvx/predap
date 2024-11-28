@@ -26,6 +26,10 @@ export default function ConfigScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getUser();
     });

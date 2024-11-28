@@ -34,6 +34,10 @@ export default function ProfileScreen() {
   const showAlert = useAlert();
 
   useEffect(() => {
+    checkUser();
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       checkUser();
     });

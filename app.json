@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "predap",
-    "slug": "predap",
+    "name": "PREDAP",
+    "slug": "PREDAP",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "predap",
+    "scheme": "PREDAP",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/logo.png",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo2.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.yasminalvesh.predap",

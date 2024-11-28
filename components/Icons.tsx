@@ -13,38 +13,62 @@ const Icons: React.FC<IconProps> = ({ name, size = 24, color = 'white' }) => {
         {
             'check-circle': (
                 <Image
-                    style={{ width: size, height: size, tintColor: color }}
-                    source={require("@/assets/images/circle-check-solid.svg")}
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/circle-check-solid.png")}
                 />
             ),
             'clock-o': (
                 <Image
-                    style={{ width: size, height: size, tintColor: color }}
-                    source={require("@/assets/images/clock-solid.svg")}
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/clock-solid.png")}
                 />
             ),
             'play-circle': (
                 <Image
-                    style={{ width: size, height: size, tintColor: color }}
-                    source={require("@/assets/images/circle-play-solid.svg")}
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/circle-play-solid.png")}
                 />
             ),
             'home': (
                 <Image
-                    style={{ width: size, height: size, tintColor: color }}
-                    source={require("@/assets/images/house-solid.svg")}
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/house-solid.png")}
+                />
+            ),
+            'home-menu': (
+                <Image
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/house-solid-menu.png")}
+                />
+            ),
+            'home-active': (
+                <Image
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/house-solid-menu-active.png")}
                 />
             ),
             'pause': (
                 <Image
-                    style={{ width: size, height: size, tintColor: color }}
-                    source={require("@/assets/images/pause-solid.svg")}
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/pause-solid.png")}
                 />
             ),
             'play': (
                 <Image
-                    style={{ width: size - 5, height: size, tintColor: color }}
-                    source={require("@/assets/images/play-solid.svg")}
+                    style={{ width: size - 5, height: size }}
+                    source={require("@/assets/images/icons/play-solid.png")}
+                />
+            ),
+            'settings': (
+                <Image
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/cog-solid.png")}
+                />
+            ),
+            'settings-active': (
+                <Image
+                    style={{ width: size, height: size }}
+                    source={require("@/assets/images/icons/cog-solid-active.png")}
                 />
             )
         }[name] || <View>{name}</View>

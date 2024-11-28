@@ -1,4 +1,4 @@
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import Icons from '@/components/Icons';
 import { useTheme } from '@/components/ThemeContext';
 import { Colors } from '@/constants/Colors';
 import { Tabs } from 'expo-router';
@@ -18,8 +18,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <Icons name={focused ? 'home-active' : 'home-menu'} />
           ),
         }}
       />
@@ -27,8 +27,8 @@ export default function TabLayout() {
         name="config"
         options={{
           title: 'Configurações',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'settings' : 'settings-outline'} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <Icons name={focused ? 'settings-active' : 'settings'} />
           ),
         }}
       />
