@@ -127,13 +127,18 @@ export default function AtribuirTreino() {
     if (treinoId) {
       await supabaseService.atualizarUltimoTreino(treinoId, formattedDate(date));
     }
-    const { data: novoTreino } = await supabaseService.adicionarNovoTreino(
+    const { data: novoTreino, error: erroCriacao } = await supabaseService.adicionarNovoTreino(
       pacienteId,
       profissionalId,
       formattedDate(date),
       formattedFullDateToSupabase(date)
     );
     const novoTreinoId = novoTreino?.[0].id;
+    if (erroCriacao) {
+      console.error(erroCriacao);
+      showAlert("Erro ao criar treino");
+      return;
+    }
     const { data: novosExercicios } =
       await supabaseService.adicionarNovosExercicios(exercicios);
     const exerciciosIds = novosExercicios?.map((x: any) => x.id) as string[];

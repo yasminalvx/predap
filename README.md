@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+# Bem-vindo ao PREDAP 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+O PREDAP foi um trabalho extensionista da disciplina de Programação Para Dispositivos Móveis em Android em colaboração com o projeto de extensão PREDAP - UNIPÊ.
+Foi desenvolvido utilizando [Expo](https://expo.dev) React Native e Supabase.
 
-## Get started
+[Versão web](https://predap.vercel.app/)
+[Baixe o apk](https://drive.google.com/file/d/1IZ4vz3tQD7jIlV6XufJlgve0ub9Uci5k/view?usp=sharing)
 
-1. Install dependencies
+Utilizado Node: 20.18.0
+
+## Comece
+
+1. Instale as dependências
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. Inicie o aplicativo
 
    ```bash
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Crie um projeto no supabase e anote as chaves do projeto
+4. Rode o seguinte script no SQL Editor do seu projeto:
+   [script.sql](./scripts/script.sql)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+5. Para configurar o supabase no seu projeto crie um arquivo .env na pasta raiz do projeto contendo as chaves do seu projeto
+   ```bash
+      API_KEY=YOUR_KEY
+      SECRET_KEY=YOUR_SECRET_KEY
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Funcionalidades
 
-## Get a fresh project
+### Telas de Autenticação
+<img src="/apresentation/img (13).png" width="200">
+<img src="/apresentation/img (16).png" width="200">
+<img src="/apresentation/img (15).png" width="200">
+<img src="/apresentation/img (14).png" width="200">
 
-When you're ready, run:
+### Telas do Paciente
+<img src="/apresentation/img (2).png" width="200">
+<img src="/apresentation/img (1).png" width="200">
+<img src="/apresentation/img (11).png" width="200">
+<img src="/apresentation/img (10).png" width="200">
+<img src="/apresentation/img (9).png" width="200">
 
-```bash
-npm run reset-project
-```
+### Telas do Fisioterapeuta
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+<img src="/apresentation/img (6).png" width="200">
+<img src="/apresentation/img (5).png" width="200">
+<img src="/apresentation/img (4).png" width="200">
+<img src="/apresentation/img (3).png" width="200">
 
-## Learn more
+### Telas de Configuração
 
-To learn more about developing your project with Expo, look at the following resources:
+<img src="/apresentation/img (8).png" width="200">
+<img src="/apresentation/img (7).png" width="200">
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+## Saiba mais
 
-Join our community of developers creating universal apps.
+Para saber mais sobre o desenvolvimento do seu projeto com o Expo, consulte os seguintes recursos:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Documentação do Expo](https://docs.expo.dev/): Aprenda os fundamentos ou aprofunde-se em tópicos avançados com nossos [guias](https://docs.expo.dev/guides).
+- [Tutorial do Expo](https://docs.expo.dev/tutorial/introduction/): Siga um tutorial passo a passo onde você criará um projeto que roda no Android, iOS e na web.
