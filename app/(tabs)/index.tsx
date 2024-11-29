@@ -11,13 +11,11 @@ export default function IndexScreen() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log("Iniciou");
     checkUser();
   }, []);
   
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      console.log("Navegou");
       checkUser();
     });
     return unsubscribe;
